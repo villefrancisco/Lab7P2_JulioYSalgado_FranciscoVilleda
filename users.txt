@@ -1,0 +1,2 @@
+Comprador;7534;18;Julio;JJ;SIU;
+Administrador;18;Marcos;Memo;Semo;

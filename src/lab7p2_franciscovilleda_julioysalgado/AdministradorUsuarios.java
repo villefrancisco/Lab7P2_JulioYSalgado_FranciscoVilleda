@@ -57,28 +57,30 @@ public class AdministradorUsuarios {
             bw = new BufferedWriter(fw);
             for (Usuario temp : listaUsuario) {
                 if(temp instanceof Comprador){
+                    bw.write(((Comprador) temp).getTipo() + ";");
                     bw.write(((Comprador) temp).getDinero() + ";");
                     bw.write(temp.getEdad() + ";");
                     bw.write(temp.getNombre() + ";");
                     bw.write(temp.getUsuario() + ";");
                     bw.write(temp.getContraseña() + ";");
-                    bw.write("(");
+                    //bw.write("(");
                     for (Accesorios SIU : ((Comprador)listaUsuario.get(listaUsuario.indexOf(temp))).getListaAccesorios()) {
                         bw.write(SIU.getID() + ",");
                         bw.write(SIU.getCantidad() + ",");
                         bw.write(SIU.getNombre() + ",");
                         bw.write((int) SIU.getPrecio() + ",");
                     }
-                    bw.write(")");
-                    bw.write("|");
+                    //bw.write(")");
+                    //bw.write("|");
                     bw.newLine();
                 }
                 if(temp instanceof Admin){
+                    bw.write(((Admin) temp).getTipo() + ";");
+                    bw.write(temp.getEdad() + ";");
                     bw.write(temp.getNombre() + ";");
                     bw.write(temp.getUsuario() + ";");
                     bw.write(temp.getContraseña() + ";");
-                    bw.write(temp.getEdad() + ";");
-                    bw.write("|");
+                    //bw.write("|");
                     bw.newLine();
                 }
             }
@@ -93,9 +95,6 @@ public class AdministradorUsuarios {
     public void cargarArchivoUserComprador() throws IOException {
         Scanner sc = null;
         Scanner sm = null;
-        FileReader canalLectura = null;
-        BufferedReader RAMLectura = null;
-        
         listaUsuario = new ArrayList();
         if (archivo.exists()) {
             try {
@@ -104,27 +103,29 @@ public class AdministradorUsuarios {
                   
                 sc.useDelimiter(";");
                 while (sc.hasNext()) {  
-                    String line = sc.next();                  
+                    String line = sc.next();
+                    System.out.println(line);
                     if("Administrador".equals(line)){
                         listaUsuario.add(new Admin(
-                            sc.next(),    
+                            line,    
                             sc.nextInt(),
                             sc.next(),
                             sc.next(),
                             sc.next())
                         );
-                        sc.nextLine();
-                    }else if("Comprador".equals(line)){
+                    }
+                    if("Comprador".equals(line)){
                         listaUsuario.add(new Comprador(
-                                sc.next(),
+                                line,
                                 sc.nextInt(),
                                 sc.nextInt(),
                                 sc.next(),
                                 sc.next(),
                                 sc.next())
                         );
-                        sc.nextLine();
                     }
+                    System.out.println(listaUsuario);
+                    sc.nextLine();
                     /*if(((Comprador)listaUsuario.get(0)).getListaAccesorios() != null){
                         sc.useDelimiter(",");
 
