@@ -22,7 +22,6 @@ public class AdministradorUsuarios {
     public AdministradorUsuarios(String path) {
         archivo = new File(path);
         factura = new File(path);
-        listaUsuario = new ArrayList();
     }
 
     public ArrayList<Usuario> getListaUsuario() {
@@ -63,13 +62,14 @@ public class AdministradorUsuarios {
                     bw.write(temp.getNombre() + ";");
                     bw.write(temp.getUsuario() + ";");
                     bw.write(temp.getContraseña() + ";");
-                    
+                    bw.write("(");
                     for (Accesorios SIU : ((Comprador)listaUsuario.get(listaUsuario.indexOf(temp))).getListaAccesorios()) {
                         bw.write(SIU.getID() + ",");
                         bw.write(SIU.getCantidad() + ",");
                         bw.write(SIU.getNombre() + ",");
                         bw.write((int) SIU.getPrecio() + ",");
                     }
+                    bw.write(")");
                     bw.write("|");
                     bw.newLine();
                 }
@@ -96,14 +96,14 @@ public class AdministradorUsuarios {
         FileReader canalLectura = null;
         BufferedReader RAMLectura = null;
         
-        //listaUsuario = new ArrayList();
+        listaUsuario = new ArrayList();
         if (archivo.exists()) {
             try {
                 
                 sc = new Scanner(archivo);
                   
                 sc.useDelimiter(";");
-                while (sc.hasNext()) {
+                while (sc.hasNext()) {  
                     String line = sc.next();                  
                     if("Administrador".equals(line)){
                         listaUsuario.add(new Admin(
@@ -111,23 +111,22 @@ public class AdministradorUsuarios {
                             sc.nextInt(),
                             sc.next(),
                             sc.next(),
-                            sc.nextLine())
+                            sc.next())
                         );
-                    }
-                    line = sc.next();
-                    if("Comprador".equals(line)){
+                        sc.nextLine();
+                    }else if("Comprador".equals(line)){
                         listaUsuario.add(new Comprador(
                                 sc.next(),
                                 sc.nextInt(),
                                 sc.nextInt(),
                                 sc.next(),
                                 sc.next(),
-                                sc.nextLine())
+                                sc.next())
                         );
+                        sc.nextLine();
                     }
-                    /*if(((Comprador)listaUsuario.get(0)).getListaAccesorios() == null){
-                        canalLectura = new FileReader(archivo);
-                        RAMLectura = new BufferedReader(canalLectura);
+                    /*if(((Comprador)listaUsuario.get(0)).getListaAccesorios() != null){
+                        sc.useDelimiter(",");
 
                         String linea;
 

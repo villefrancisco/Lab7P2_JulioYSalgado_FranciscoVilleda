@@ -11,10 +11,10 @@ public class AdministradorAccesorios {
     
     private ArrayList<Accesorios> listaAccesorio
             = new ArrayList();
-    private File archivo = null;
+    private File accesorio = null;
     
     public AdministradorAccesorios(String path) {
-        archivo = new File(path);
+        accesorio = new File(path);
     }
 
     public ArrayList<Accesorios> getListaAccesorio() {
@@ -26,18 +26,18 @@ public class AdministradorAccesorios {
     }
 
     public File getArchivo() {
-        return archivo;
+        return accesorio;
     }
 
     public void setArchivo(File archivo) {
-        this.archivo = archivo;
+        this.accesorio = archivo;
     }
     public void escribirArchivoAcc() throws IOException {
         FileWriter fw = null;
         BufferedWriter bw = null;
         try {
             
-            fw = new FileWriter(archivo, true);
+            fw = new FileWriter(accesorio, true);
             bw = new BufferedWriter(fw);
             for (Accesorios temp : listaAccesorio) {
                 bw.write(temp.getID()+ ",");
@@ -56,10 +56,10 @@ public class AdministradorAccesorios {
     public void cargarArchivoAcc() {
         Scanner sc = null;
         listaAccesorio = new ArrayList();
-        if (archivo.exists()) {
+        if (accesorio.exists()) {
             try {
                 
-                sc = new Scanner(archivo);
+                sc = new Scanner(accesorio  );
                 sc.useDelimiter(",");
                 while (sc.hasNext()) {
                     listaAccesorio.add(new Accesorios(

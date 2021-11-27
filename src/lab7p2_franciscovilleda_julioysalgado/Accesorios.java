@@ -1,6 +1,10 @@
 package lab7p2_franciscovilleda_julioysalgado;
 
+import java.util.Random;
+
 public class Accesorios {
+    Random rng = new Random();
+    
     private int ID, cantidad;
     private String nombre;
     private double precio;
@@ -9,7 +13,8 @@ public class Accesorios {
     }
     
     public Accesorios(int ID, int cantidad, String nombre, double precio) {
-        this.ID = ID;
+        int num = rng.nextInt(999999) + 100000;
+        setID(num);
         this.cantidad = cantidad;
         this.nombre = nombre;
         this.precio = precio;
