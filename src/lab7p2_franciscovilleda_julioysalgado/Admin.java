@@ -5,10 +5,10 @@ public class Admin extends Usuario {
     public Admin() {
     }
 
-    public Admin(int edad, String nombre, String usuario, String contraseña) {
-        super(edad, nombre, usuario, contraseña);
+    public Admin(String tipo, int edad, String nombre, String usuario, String contraseña) {
+        super(edad, nombre, usuario, contraseña, tipo);
     }
-
+    
     @Override
     public int getEdad() {
         return edad;
@@ -34,6 +34,14 @@ public class Admin extends Usuario {
         return usuario;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
     @Override
     public void setUsuario(String usuario) {
         this.usuario = usuario;

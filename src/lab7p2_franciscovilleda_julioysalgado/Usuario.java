@@ -2,18 +2,19 @@ package lab7p2_franciscovilleda_julioysalgado;
 
 public class Usuario {
     protected int edad;
-    protected String nombre, usuario, contraseña;
+    protected String nombre, usuario, contraseña, tipo;
 
     public Usuario() {
     }
-
-    public Usuario(int edad, String nombre, String usuario, String contraseña) {
+    
+    public Usuario(int edad, String nombre, String usuario, String contraseña, String tipo) {
         this.edad = edad;
         this.nombre = nombre;
         this.usuario = usuario;
         this.contraseña = contraseña;
+        this.tipo = tipo;
     }
-
+    
     public int getEdad() {
         return edad;
     }

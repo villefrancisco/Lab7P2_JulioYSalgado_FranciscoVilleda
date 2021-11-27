@@ -22,6 +22,7 @@ public class AdministradorUsuarios {
     public AdministradorUsuarios(String path) {
         archivo = new File(path);
         factura = new File(path);
+        listaUsuario = new ArrayList();
     }
 
     public ArrayList<Usuario> getListaUsuario() {
@@ -63,15 +64,14 @@ public class AdministradorUsuarios {
                     bw.write(temp.getUsuario() + ";");
                     bw.write(temp.getContraseña() + ";");
                     
-                    bw.write("(");
                     for (Accesorios SIU : ((Comprador)listaUsuario.get(listaUsuario.indexOf(temp))).getListaAccesorios()) {
                         bw.write(SIU.getID() + ",");
                         bw.write(SIU.getCantidad() + ",");
                         bw.write(SIU.getNombre() + ",");
                         bw.write((int) SIU.getPrecio() + ",");
                     }
-                    bw.write(")");
                     bw.write("|");
+                    bw.newLine();
                 }
                 if(temp instanceof Admin){
                     bw.write(temp.getNombre() + ";");
@@ -79,6 +79,7 @@ public class AdministradorUsuarios {
                     bw.write(temp.getContraseña() + ";");
                     bw.write(temp.getEdad() + ";");
                     bw.write("|");
+                    bw.newLine();
                 }
             }
             bw.flush();
@@ -102,15 +103,29 @@ public class AdministradorUsuarios {
                 sc = new Scanner(archivo);
                   
                 sc.useDelimiter(";");
-                while (!sc.hasNext()) {                    
-                    listaUsuario.add(new Comprador(
-                            sc.nextInt(),
+                while (sc.hasNext()) {
+                    String line = sc.next();                  
+                    if("Administrador".equals(line)){
+                        listaUsuario.add(new Admin(
+                            sc.next(),    
                             sc.nextInt(),
                             sc.next(),
                             sc.next(),
-                            sc.next())
-                    );
-                    if(((Comprador)listaUsuario.get(0)).getListaAccesorios() == null){
+                            sc.nextLine())
+                        );
+                    }
+                    line = sc.next();
+                    if("Comprador".equals(line)){
+                        listaUsuario.add(new Comprador(
+                                sc.next(),
+                                sc.nextInt(),
+                                sc.nextInt(),
+                                sc.next(),
+                                sc.next(),
+                                sc.nextLine())
+                        );
+                    }
+                    /*if(((Comprador)listaUsuario.get(0)).getListaAccesorios() == null){
                         canalLectura = new FileReader(archivo);
                         RAMLectura = new BufferedReader(canalLectura);
 
@@ -121,7 +136,7 @@ public class AdministradorUsuarios {
                             sm = new Scanner(lineaReq);
                             sm.useDelimiter(",");
                             
-                            for (int i = 0; i < lineaReq.length(); i++) {
+                            while(sm.hasNext()){
                                 ((Comprador)listaUsuario.get(0)).getListaAccesorios().add(new Accesorios(
                                         sm.nextInt(),
                                         sm.nextInt(),
@@ -132,7 +147,9 @@ public class AdministradorUsuarios {
                         }
                         RAMLectura.close();
                         canalLectura.close();
-                    }
+                        sm.close();
+                    }*/
+                    
                 }
                 
             } catch (Exception ex) {
@@ -141,7 +158,7 @@ public class AdministradorUsuarios {
         }
     }
     public void cargarArchivoUserAdmin() {
-        Scanner sc = null;
+        /*Scanner sc = null;
         //listaUsuario = new ArrayList();
         
         if (archivo.exists()) {
@@ -153,23 +170,38 @@ public class AdministradorUsuarios {
                             sc.nextInt(),
                             sc.next(),
                             sc.next(),
-                            sc.next())
+                            sc.nextLine())
                     );
                 }
             } catch (Exception ex) {
             }
             sc.close();
-        }
+        }*/
     }
     public void escribirArchivoFactura (int contador) throws IOException {
         FileWriter fw = null;
         BufferedWriter bw = null;
+        double precio = 0, isv = 0;
         
         try {
-            fw = new FileWriter(factura, false);
+            fw = new FileWriter(factura, true);
             bw = new BufferedWriter(fw);
             
+            
             if(((Comprador)listaUsuario.get(0)).getDinero() >= 0){
+                bw.write("Factura #" + contador);
+                for (int i = 0; i < ((Comprador)listaUsuario.get(0)).getListaAccesorios().size(); i++) {
+                    
+                    bw.write("Accesorio: " + ((Comprador)listaUsuario.get(0)).getListaAccesorios().get(i).getNombre() 
+                            + "Precio(Unidad): " + ((Comprador)listaUsuario.get(0)).getListaAccesorios().get(i).getPrecio());
+                    precio += ((Comprador)listaUsuario.get(0)).getListaAccesorios().get(i).getPrecio();
+                                    
+                }
+                isv = precio * 0.15;
+                bw.write("Subtotal: L." + precio);
+                precio = precio + isv;
+                bw.write("ISV(15%): L." + isv);
+                bw.write("Total: L." + precio);
                 
             }
             

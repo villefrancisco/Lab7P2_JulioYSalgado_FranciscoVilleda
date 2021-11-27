@@ -14,8 +14,8 @@ public class Comprador extends Usuario {
         this.dinero = dinero;
     }
 
-    public Comprador(int dinero, int edad, String nombre, String usuario, String contraseña) {
-        super(edad, nombre, usuario, contraseña);
+    public Comprador(String tipo, int dinero, int edad, String nombre, String usuario, String contraseña) {
+        super(edad, nombre, usuario, contraseña, tipo);
         this.dinero = dinero;
     }
 
@@ -75,6 +75,14 @@ public class Comprador extends Usuario {
         this.contraseña = contraseña;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
     @Override
     public String toString() {
         return super.toString();
