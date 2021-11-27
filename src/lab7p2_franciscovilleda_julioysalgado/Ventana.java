@@ -989,8 +989,7 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_pestania_compradorStateChanged
 
     private void jToggleButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton2MouseClicked
-        // TODO add your handling code here:
-        
+        // TODO add your handling code here: 
     }//GEN-LAST:event_jToggleButton2MouseClicked
 
     private void pestania_adminStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_pestania_adminStateChanged
@@ -1008,7 +1007,6 @@ public class Ventana extends javax.swing.JFrame {
             for (Accesorios temp : aa.getListaAccesorio()) {
                 modelo.addElement(temp);
             }
-            cb_eliminar.setModel(modelo);
         }else if(pestania_admin.getSelectedIndex() == 3){
             aa.cargarArchivoAcc();
             DefaultTableModel modelo
