@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,7 +20,7 @@ public class Ventana extends javax.swing.JFrame {
     Random rng = new Random();
     AdministradorUsuarios au = new AdministradorUsuarios("./users.txt");
     Usuario user;
-    AdministradorAccesorios ac = new AdministradorAccesorios("./accesorios.txt");
+    AdministradorAccesorios aa = new AdministradorAccesorios("./accesorios.txt");
     /**
      * Creates new form Ventana
      */
@@ -37,20 +38,19 @@ public class Ventana extends javax.swing.JFrame {
     private void initComponents() {
 
         jd_comprador = new javax.swing.JDialog();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        pestania_comprador = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tabla_comprar = new javax.swing.JTable();
         jToggleButton2 = new javax.swing.JToggleButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tabla_compras = new javax.swing.JTable();
         jToggleButton1 = new javax.swing.JToggleButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        nombre_comprador = new javax.swing.JLabel();
+        dinero_comprador = new javax.swing.JLabel();
         jd_admin = new javax.swing.JDialog();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        nombre_admin = new javax.swing.JLabel();
         pestania_admin = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -76,7 +76,7 @@ public class Ventana extends javax.swing.JFrame {
         cb_eliminar = new javax.swing.JComboBox<>();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        tabla_accesorios = new javax.swing.JTable();
         jToggleButton3 = new javax.swing.JToggleButton();
         jd_login = new javax.swing.JDialog();
         jLabel8 = new javax.swing.JLabel();
@@ -107,7 +107,13 @@ public class Ventana extends javax.swing.JFrame {
         menu_app = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        pestania_comprador.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                pestania_compradorStateChanged(evt);
+            }
+        });
+
+        tabla_comprar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -133,9 +139,19 @@ public class Ventana extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tabla_comprar);
 
         jToggleButton2.setText("Comprar");
+        jToggleButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jToggleButton2MouseClicked(evt);
+            }
+        });
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -158,9 +174,9 @@ public class Ventana extends javax.swing.JFrame {
                 .addGap(23, 23, 23))
         );
 
-        jTabbedPane1.addTab("Comprar", jPanel2);
+        pestania_comprador.addTab("Comprar", jPanel2);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tabla_compras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -186,7 +202,7 @@ public class Ventana extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(jTable3);
+        jScrollPane3.setViewportView(tabla_compras);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -209,15 +225,15 @@ public class Ventana extends javax.swing.JFrame {
                     .addContainerGap(32, Short.MAX_VALUE)))
         );
 
-        jTabbedPane1.addTab("Compras", jPanel1);
+        pestania_comprador.addTab("Compras", jPanel1);
 
         jToggleButton1.setText("Cerrar Sesion");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setText("Usuario: ");
+        nombre_comprador.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        nombre_comprador.setText("Usuario: ");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("$");
+        dinero_comprador.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        dinero_comprador.setText("$");
 
         javax.swing.GroupLayout jd_compradorLayout = new javax.swing.GroupLayout(jd_comprador.getContentPane());
         jd_comprador.getContentPane().setLayout(jd_compradorLayout);
@@ -227,15 +243,15 @@ public class Ventana extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jd_compradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jd_compradorLayout.createSequentialGroup()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pestania_comprador, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 21, Short.MAX_VALUE))
                     .addGroup(jd_compradorLayout.createSequentialGroup()
                         .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jd_compradorLayout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nombre_comprador, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dinero_comprador, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(62, 62, 62))))
         );
         jd_compradorLayout.setVerticalGroup(
@@ -243,20 +259,17 @@ public class Ventana extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_compradorLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(jd_compradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(nombre_comprador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dinero_comprador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pestania_comprador, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToggleButton1)
                 .addGap(13, 13, 13))
         );
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel3.setText("Usuario: ");
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setText("$");
+        nombre_admin.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        nombre_admin.setText("Usuario: ");
 
         pestania_admin.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -465,7 +478,7 @@ public class Ventana extends javax.swing.JFrame {
 
         pestania_admin.addTab("Eliminar", jPanel5);
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        tabla_accesorios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -477,7 +490,7 @@ public class Ventana extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Double.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
@@ -491,7 +504,7 @@ public class Ventana extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(jTable4);
+        jScrollPane4.setViewportView(tabla_accesorios);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -519,26 +532,19 @@ public class Ventana extends javax.swing.JFrame {
         jd_adminLayout.setHorizontalGroup(
             jd_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_adminLayout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_adminLayout.createSequentialGroup()
                 .addContainerGap(21, Short.MAX_VALUE)
-                .addGroup(jd_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jd_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pestania_admin, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pestania_admin)
+                    .addComponent(nombre_admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(24, 24, 24))
         );
         jd_adminLayout.setVerticalGroup(
             jd_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jd_adminLayout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addGroup(jd_adminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(42, 42, 42)
+                .addComponent(nombre_admin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(pestania_admin, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jToggleButton3)
@@ -839,16 +845,15 @@ public class Ventana extends javax.swing.JFrame {
 
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
         // TODO add your handling code here:
-        // TODO add your handling code here:
         try{
             validarUser(reg_usuario.getText());
             if(bt_admin.isSelected()){
-                au.getListaUsuario().add(new Admin(Integer.parseInt(reg_edad.getText()), reg_nombre.getText(), 
+                au.getListaUsuario().add(new Admin("Administrador", Integer.parseInt(reg_edad.getText()), reg_nombre.getText(), 
                         reg_usuario.getText(), reg_password.getText()));
                 au.escribirArchivoUser();
             }
             else if(bt_compra.isSelected()){
-                au.getListaUsuario().add(new Comprador(1000 + rng.nextInt(7000),Integer.parseInt(reg_edad.getText()), reg_nombre.getText(), 
+                au.getListaUsuario().add(new Comprador("Comprador", 1000 + rng.nextInt(7000),Integer.parseInt(reg_edad.getText()), reg_nombre.getText(), 
                         reg_usuario.getText(), reg_password.getText()));
                 au.escribirArchivoUser();
             }
@@ -866,47 +871,35 @@ public class Ventana extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
         if(user instanceof Comprador){
+            nombre_comprador.setText("Comprador: " + user.getNombre());
+            dinero_comprador.setText("$" + ((Comprador)user).getDinero());
             jd_comprador.pack();
             jd_comprador.setLocationRelativeTo(this);
             jd_comprador.setModal(true);
             jd_comprador.setVisible(true);
+            
         }
         else if(user instanceof Admin){
             jd_admin.pack();
             jd_admin.setLocationRelativeTo(this);
             jd_admin.setModal(true);
             jd_admin.setVisible(true);
+            
+            nombre_admin.setText("Administrador: " + user.getNombre());
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
-
-    private void pestania_adminStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_pestania_adminStateChanged
-        // TODO add your handling code here:
-        if(pestania_admin.getSelectedIndex() == 1){
-            DefaultComboBoxModel modelo = new DefaultComboBoxModel();
-            ac.cargarArchivoAcc();
-            for (Accesorios temp : ac.getListaAccesorio()) {
-                modelo.addElement(temp);
-            }
-            cb_mod.setModel(modelo);
-        }else if(pestania_admin.getSelectedIndex() == 2){
-            DefaultComboBoxModel modelo = new DefaultComboBoxModel();
-            ac.cargarArchivoAcc();
-            for (Accesorios temp : ac.getListaAccesorio()) {
-                modelo.addElement(temp);
-            }
-            cb_eliminar.setModel(modelo);
-        }
-    }//GEN-LAST:event_pestania_adminStateChanged
 
     private void jToggleButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton4MouseClicked
         // TODO add your handling code here:
         try{
-            ac.cargarArchivoAcc();
-            ac.getListaAccesorio().add(new Accesorios(1, Integer.parseInt(crear_cant.getText()), crear_nombre.getText()
+            aa.cargarArchivoAcc();
+            aa.getListaAccesorio().add(new Accesorios(1, Integer.parseInt(crear_cant.getText()), crear_nombre.getText()
                     , Double.parseDouble(crear_precio.getText())));
-            ac.escribirArchivoAcc();
+            aa.escribirArchivoAcc();
+            
+            JOptionPane.showMessageDialog(jd_admin, "Se ha creado el accesorio.");
         }catch(Exception e){
-            JOptionPane.showMessageDialog(jd_registro, "No se pudo crear el accesorio. ");
+            JOptionPane.showMessageDialog(jd_admin, "No se pudo crear el accesorio. ");
         }
         finally{
             crear_cant.setText("");
@@ -926,14 +919,15 @@ public class Ventana extends javax.swing.JFrame {
     private void jToggleButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton5MouseClicked
         // TODO add your handling code here:
         try {
-            ac.cargarArchivoAcc();
+            aa.cargarArchivoAcc();
             Accesorios accesorio = (Accesorios)cb_mod.getSelectedItem();
             accesorio.setNombre(mod_nombre.getText());
             accesorio.setCantidad(Integer.parseInt(mod_cant.getText()));
             accesorio.setPrecio(Double.parseDouble(mod_precio.getText()));
-            ac.escribirArchivoAcc();
+            aa.escribirArchivoAcc();
+            JOptionPane.showMessageDialog(jd_admin, "Se ha modificado el accesorio.");
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(jd_registro, "No se pudo modificar el accesorio.");
+            JOptionPane.showMessageDialog(jd_admin, "No se pudo modificar el accesorio.");
         }finally{
             mod_nombre.setText("");
             mod_cant.setText("");
@@ -944,21 +938,97 @@ public class Ventana extends javax.swing.JFrame {
     private void jToggleButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton6MouseClicked
         // TODO add your handling code here:
         try{
-            ac.cargarArchivoAcc();
+            aa.cargarArchivoAcc();
             Accesorios accesorio = (Accesorios)cb_eliminar.getSelectedItem();
-            ac.getListaAccesorio().remove(accesorio);
-            ac.escribirArchivoAcc();
+            aa.getListaAccesorio().remove(accesorio);
+            aa.escribirArchivoAcc();
+            JOptionPane.showMessageDialog(jd_admin, "Se ha eliminado el accesorio.");
         }catch(Exception e){
-            JOptionPane.showMessageDialog(jd_registro, "No se pudo eliminar el accesorio.");
+            JOptionPane.showMessageDialog(jd_admin, "No se pudo eliminar el accesorio.");
         }finally{
             DefaultComboBoxModel modelo = new DefaultComboBoxModel();
-            ac.cargarArchivoAcc();
-            for (Accesorios temp : ac.getListaAccesorio()) {
+            aa.cargarArchivoAcc();
+            for (Accesorios temp : aa.getListaAccesorio()) {
                 modelo.addElement(temp);
             }
             cb_eliminar.setModel(modelo);
         }
     }//GEN-LAST:event_jToggleButton6MouseClicked
+
+    private void pestania_compradorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_pestania_compradorStateChanged
+        if(pestania_comprador.getSelectedIndex() == 0){
+            aa.cargarArchivoAcc();
+            DefaultTableModel modelo
+                        = new DefaultTableModel();
+            for (Accesorios temp : aa.getListaAccesorio()) {
+                Object[] newrow = {
+                        temp.getID(),
+                        temp.getNombre(),
+                        temp.getPrecio(),
+                        temp.getCantidad()
+                    };                
+                modelo.addRow(newrow);    
+            } 
+            tabla_comprar.setModel(modelo);
+        }else if(pestania_comprador.getSelectedIndex() == 1){
+            aa.cargarArchivoAcc();
+            DefaultTableModel modelo
+                        = new DefaultTableModel();
+            for (Accesorios temp : aa.getListaAccesorio()) {
+                Object[] newrow = {
+                        temp.getID(),
+                        temp.getNombre(),
+                        temp.getPrecio(),
+                        temp.getCantidad()
+                    };                
+                modelo.addRow(newrow);    
+            } 
+            tabla_compras.setModel(modelo);
+        }
+        
+    }//GEN-LAST:event_pestania_compradorStateChanged
+
+    private void jToggleButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton2MouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jToggleButton2MouseClicked
+
+    private void pestania_adminStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_pestania_adminStateChanged
+        // TODO add your handling code here:
+        if(pestania_admin.getSelectedIndex() == 1){
+            aa.cargarArchivoAcc();
+            DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+            for (Accesorios temp : aa.getListaAccesorio()) {
+                modelo.addElement(temp);
+            }
+            cb_mod.setModel(modelo);
+        }else if(pestania_admin.getSelectedIndex() == 2){
+            DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+            aa.cargarArchivoAcc();
+            for (Accesorios temp : aa.getListaAccesorio()) {
+                modelo.addElement(temp);
+            }
+            cb_eliminar.setModel(modelo);
+        }else if(pestania_admin.getSelectedIndex() == 3){
+            aa.cargarArchivoAcc();
+            DefaultTableModel modelo
+                        = new DefaultTableModel();
+            for (Accesorios temp : aa.getListaAccesorio()) {
+                Object[] newrow = {
+                        temp.getID(),
+                        temp.getNombre(),
+                        temp.getPrecio(),
+                        temp.getCantidad()
+                    };                
+                modelo.addRow(newrow);    
+            } 
+            tabla_comprar.setModel(modelo);
+        }
+    }//GEN-LAST:event_pestania_adminStateChanged
+
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     private void validarUser(String user) throws Exception{
         au.cargarArchivoUserComprador();
@@ -1013,11 +1083,11 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField crear_cant;
     private javax.swing.JTextField crear_nombre;
     private javax.swing.JFormattedTextField crear_precio;
+    private javax.swing.JLabel dinero_comprador;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1027,11 +1097,8 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -1049,10 +1116,6 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
@@ -1068,11 +1131,17 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField mod_cant;
     private javax.swing.JTextField mod_nombre;
     private javax.swing.JFormattedTextField mod_precio;
+    private javax.swing.JLabel nombre_admin;
+    private javax.swing.JLabel nombre_comprador;
     private javax.swing.JTabbedPane pestania_admin;
+    private javax.swing.JTabbedPane pestania_comprador;
     private javax.swing.JFormattedTextField reg_edad;
     private javax.swing.JTextField reg_nombre;
     private javax.swing.JTextField reg_password;
     private javax.swing.JTextField reg_usuario;
+    private javax.swing.JTable tabla_accesorios;
+    private javax.swing.JTable tabla_comprar;
+    private javax.swing.JTable tabla_compras;
     private javax.swing.JTextField text_login;
     private javax.swing.JPasswordField text_password;
     // End of variables declaration//GEN-END:variables
