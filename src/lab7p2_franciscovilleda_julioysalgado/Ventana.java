@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 package lab7p2_franciscovilleda_julioysalgado;
+import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -61,16 +64,16 @@ public class Ventana extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         cb_mod = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        mod_nombre = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jFormattedTextField3 = new javax.swing.JFormattedTextField();
+        mod_cant = new javax.swing.JFormattedTextField();
         jLabel12 = new javax.swing.JLabel();
-        jFormattedTextField4 = new javax.swing.JFormattedTextField();
+        mod_precio = new javax.swing.JFormattedTextField();
         jToggleButton5 = new javax.swing.JToggleButton();
         jPanel5 = new javax.swing.JPanel();
         jToggleButton6 = new javax.swing.JToggleButton();
         jLabel13 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cb_eliminar = new javax.swing.JComboBox<>();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable4 = new javax.swing.JTable();
@@ -334,26 +337,36 @@ public class Ventana extends javax.swing.JFrame {
         jLabel9.setText("ID del Accesorio:");
 
         cb_mod.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cb_mod.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cb_modMouseExited(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel10.setText("Nombre del Accesorio:");
 
-        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        mod_nombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel11.setText("Cantidad:");
 
-        jFormattedTextField3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("######"))));
-        jFormattedTextField3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        mod_cant.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("######"))));
+        mod_cant.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel12.setText("Precio:");
 
-        jFormattedTextField4.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("######"))));
-        jFormattedTextField4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        mod_precio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("######"))));
+        mod_precio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jToggleButton5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jToggleButton5.setText("Modificar");
+        jToggleButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jToggleButton5MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -364,14 +377,14 @@ public class Ventana extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
                     .addComponent(cb_mod, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mod_cant, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mod_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
-                    .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(mod_precio, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(64, 64, 64))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(181, 181, 181)
@@ -391,17 +404,17 @@ public class Ventana extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cb_mod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(mod_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jFormattedTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(mod_cant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFormattedTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(mod_precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addComponent(jToggleButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42))
@@ -411,11 +424,16 @@ public class Ventana extends javax.swing.JFrame {
 
         jToggleButton6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jToggleButton6.setText("Eliminar");
+        jToggleButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jToggleButton6MouseClicked(evt);
+            }
+        });
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel13.setText("ID del Accesorio:");
 
-        jComboBox2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cb_eliminar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -425,7 +443,7 @@ public class Ventana extends javax.swing.JFrame {
                 .addGap(52, 52, 52)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cb_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
                 .addComponent(jToggleButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(69, 69, 69))
@@ -438,7 +456,7 @@ public class Ventana extends javax.swing.JFrame {
                         .addGap(95, 95, 95)
                         .addComponent(jLabel13)
                         .addGap(25, 25, 25)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cb_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(107, 107, 107)
                         .addComponent(jToggleButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -870,6 +888,13 @@ public class Ventana extends javax.swing.JFrame {
                 modelo.addElement(temp);
             }
             cb_mod.setModel(modelo);
+        }else if(pestania_admin.getSelectedIndex() == 2){
+            DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+            ac.cargarArchivoAcc();
+            for (Accesorios temp : ac.getListaAccesorio()) {
+                modelo.addElement(temp);
+            }
+            cb_eliminar.setModel(modelo);
         }
     }//GEN-LAST:event_pestania_adminStateChanged
 
@@ -889,6 +914,51 @@ public class Ventana extends javax.swing.JFrame {
             crear_precio.setText("");
         }
     }//GEN-LAST:event_jToggleButton4MouseClicked
+
+    private void cb_modMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cb_modMouseExited
+        // TODO add your handling code here:
+        Accesorios accesorio = (Accesorios)cb_mod.getSelectedItem();
+        mod_nombre.setText(accesorio.getNombre());
+        mod_cant.setText(""+accesorio.getCantidad());
+        mod_precio.setText(""+accesorio.getPrecio());
+    }//GEN-LAST:event_cb_modMouseExited
+
+    private void jToggleButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton5MouseClicked
+        // TODO add your handling code here:
+        try {
+            ac.cargarArchivoAcc();
+            Accesorios accesorio = (Accesorios)cb_mod.getSelectedItem();
+            accesorio.setNombre(mod_nombre.getText());
+            accesorio.setCantidad(Integer.parseInt(mod_cant.getText()));
+            accesorio.setPrecio(Double.parseDouble(mod_precio.getText()));
+            ac.escribirArchivoAcc();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(jd_registro, "No se pudo modificar el accesorio.");
+        }finally{
+            mod_nombre.setText("");
+            mod_cant.setText("");
+            mod_precio.setText("");
+        }
+    }//GEN-LAST:event_jToggleButton5MouseClicked
+
+    private void jToggleButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton6MouseClicked
+        // TODO add your handling code here:
+        try{
+            ac.cargarArchivoAcc();
+            Accesorios accesorio = (Accesorios)cb_eliminar.getSelectedItem();
+            ac.getListaAccesorio().remove(accesorio);
+            ac.escribirArchivoAcc();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(jd_registro, "No se pudo eliminar el accesorio.");
+        }finally{
+            DefaultComboBoxModel modelo = new DefaultComboBoxModel();
+            ac.cargarArchivoAcc();
+            for (Accesorios temp : ac.getListaAccesorio()) {
+                modelo.addElement(temp);
+            }
+            cb_eliminar.setModel(modelo);
+        }
+    }//GEN-LAST:event_jToggleButton6MouseClicked
 
     private void validarUser(String user) throws Exception{
         au.cargarArchivoUserComprador();
@@ -938,6 +1008,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JRadioButton bt_admin;
     private javax.swing.JRadioButton bt_compra;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> cb_eliminar;
     private javax.swing.JComboBox<String> cb_mod;
     private javax.swing.JFormattedTextField crear_cant;
     private javax.swing.JTextField crear_nombre;
@@ -946,9 +1017,6 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JFormattedTextField jFormattedTextField3;
-    private javax.swing.JFormattedTextField jFormattedTextField4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -985,7 +1053,6 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
@@ -998,6 +1065,9 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JDialog jd_registro;
     private javax.swing.JMenu menu_app;
     private javax.swing.JMenu menu_login;
+    private javax.swing.JFormattedTextField mod_cant;
+    private javax.swing.JTextField mod_nombre;
+    private javax.swing.JFormattedTextField mod_precio;
     private javax.swing.JTabbedPane pestania_admin;
     private javax.swing.JFormattedTextField reg_edad;
     private javax.swing.JTextField reg_nombre;
