@@ -21,6 +21,7 @@ public class Ventana extends javax.swing.JFrame {
     AdministradorUsuarios au = new AdministradorUsuarios("./users.txt");
     Usuario user;
     AdministradorAccesorios aa = new AdministradorAccesorios("./accesorios.txt");
+    int n = 1;
     /**
      * Creates new form Ventana
      */
@@ -115,17 +116,14 @@ public class Ventana extends javax.swing.JFrame {
 
         tabla_comprar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "ID", "Accessorio", "Precio", "Cantidad"
+                "ID", "Accesorio", "Precio", "Cantidad"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
@@ -145,11 +143,6 @@ public class Ventana extends javax.swing.JFrame {
         jToggleButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jToggleButton2MouseClicked(evt);
-            }
-        });
-        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton2ActionPerformed(evt);
             }
         });
 
@@ -178,56 +171,48 @@ public class Ventana extends javax.swing.JFrame {
 
         tabla_compras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "ID", "Accessorio", "Precio", "Cantidad"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Double.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
         });
+        tabla_compras.setToolTipText("");
         jScrollPane3.setViewportView(tabla_compras);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 551, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(22, 22, 22)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(24, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(25, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 279, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(34, 34, 34)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(32, Short.MAX_VALUE)))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pestania_comprador.addTab("Compras", jPanel1);
 
         jToggleButton1.setText("Cerrar Sesion");
+        jToggleButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jToggleButton1MouseClicked(evt);
+            }
+        });
 
         nombre_comprador.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         nombre_comprador.setText("Usuario: ");
@@ -493,7 +478,7 @@ public class Ventana extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                true, false, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -511,21 +496,26 @@ public class Ventana extends javax.swing.JFrame {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addGap(40, 40, 40)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 529, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(42, 42, 42)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         pestania_admin.addTab("Accesorios", jPanel6);
 
         jToggleButton3.setText("Cerrar Sesion");
+        jToggleButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jToggleButton3MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jd_adminLayout = new javax.swing.GroupLayout(jd_admin.getContentPane());
         jd_admin.getContentPane().setLayout(jd_adminLayout);
@@ -989,7 +979,22 @@ public class Ventana extends javax.swing.JFrame {
     }//GEN-LAST:event_pestania_compradorStateChanged
 
     private void jToggleButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton2MouseClicked
-        // TODO add your handling code here: 
+        try {
+            int num = tabla_compras.getSelectedRow();
+            aa.cargarArchivoAcc();
+            au.cargarArchivoUserComprador();
+            Comprador c = (Comprador)user;
+            double din = c.getDinero();
+            Accesorios accesorio = aa.getListaAccesorio().get(num);
+            if(din - accesorio.getPrecio() >= 0){
+                c.getListaAccesorios().add(aa.getListaAccesorio().remove(num));
+                c.setDinero(din - accesorio.getPrecio());
+            }
+            au.escribirArchivoUser();
+            aa.escribirArchivoAcc();
+        } catch (IOException ex) {
+            Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jToggleButton2MouseClicked
 
     private void pestania_adminStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_pestania_adminStateChanged
@@ -1001,13 +1006,16 @@ public class Ventana extends javax.swing.JFrame {
                 modelo.addElement(temp);
             }
             cb_mod.setModel(modelo);
-        }else if(pestania_admin.getSelectedIndex() == 2){
+        }
+        else if(pestania_admin.getSelectedIndex() == 2){
             DefaultComboBoxModel modelo = new DefaultComboBoxModel();
             aa.cargarArchivoAcc();
             for (Accesorios temp : aa.getListaAccesorio()) {
                 modelo.addElement(temp);
             }
-        }else if(pestania_admin.getSelectedIndex() == 3){
+            cb_eliminar.setModel(modelo);
+        }
+        else if(pestania_admin.getSelectedIndex() == 3){
             aa.cargarArchivoAcc();
             DefaultTableModel modelo
                         = new DefaultTableModel();
@@ -1020,13 +1028,32 @@ public class Ventana extends javax.swing.JFrame {
                     };                
                 modelo.addRow(newrow);    
             } 
-            tabla_comprar.setModel(modelo);
+            tabla_accesorios.setModel(modelo);
         }
     }//GEN-LAST:event_pestania_adminStateChanged
 
-    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+    private void jToggleButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton1MouseClicked
+        try {
+            // TODO add your handling code here:
+            au.escribirArchivoFactura(n);
+            user = null;
+            jd_comprador.setModal(false);
+            jd_comprador.setVisible(false);
+            menu_app.setEnabled(false);
+            menu_login.setEnabled(true);
+        } catch (IOException ex) {
+            Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jToggleButton1MouseClicked
+
+    private void jToggleButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButton3MouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton2ActionPerformed
+        user = null;
+        jd_admin.setModal(false);
+        jd_admin.setVisible(false);
+        menu_app.setEnabled(false);
+        menu_login.setEnabled(true);
+    }//GEN-LAST:event_jToggleButton3MouseClicked
 
     private void validarUser(String user) throws Exception{
         au.cargarArchivoUserComprador();
