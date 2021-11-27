@@ -988,7 +988,7 @@ public class Ventana extends javax.swing.JFrame {
             Accesorios accesorio = aa.getListaAccesorio().get(num);
             if(din - accesorio.getPrecio() >= 0){
                 c.getListaAccesorios().add(aa.getListaAccesorio().remove(num));
-                c.setDinero(din - accesorio.getPrecio());
+                c.setDinero((int) (din - accesorio.getPrecio()));
             }
             au.escribirArchivoUser();
             aa.escribirArchivoAcc();
